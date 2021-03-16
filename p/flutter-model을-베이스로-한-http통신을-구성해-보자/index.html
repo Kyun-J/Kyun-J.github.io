@@ -85,6 +85,43 @@
             </a>
         </li>
         
+        
+
+        <li >
+            <a href='/archives/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
 
         
             <li id="dark-mode-toggle">
@@ -172,7 +209,7 @@ Dart의 아래 특징을 사용하면 충분히 가능할거란 판단이 들어
 </ol>
 <h2 id="기본-model클래스-생성">기본 Model클래스 생성</h2>
 <p>모든 Model객체의 부모가 될 Model 클래스를 생성하자.</p>
-<div class="highlight"><pre class="chroma"><code class="language-dart" data-lang="dart"><span class="kd">class</span> <span class="nc">Model</span> <span class="p">{}</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Model</span> {}
 </code></pre></div><p>Model클래스는 일단 아무런 기능이 필요 없다. 모든 Model객체는 Model클래스를 extends 할 것이고, 이를 통해 1차 타입 체크를 할 것이다.<br>
 추가로, 모든 Model객체들에게 공통적인 기능이 필요하다면 해당 클래스에 구현하면 된다.</p>
 <h3 id="서버로부터-기본공통적인-정보를-저장할-res-클래스">서버로부터 기본(공통)적인 정보를 저장할 Res 클래스</h3>
@@ -192,13 +229,13 @@ Dart의 아래 특징을 사용하면 충분히 가능할거란 판단이 들어
 <script type="application/javascript" src="https://gist.github.com/Kyun-J/e4323ad4c85a3a06888c54e8449addea.js?file=toSpecificModel.dart"></script>
 </p>
 <p>위 함수는 아래와 같이 사용할 수 있을 것 이다.</p>
-<div class="highlight"><pre class="chroma"><code class="language-dart" data-lang="dart"><span class="n">User</span> <span class="n">myUser</span> <span class="o">=</span> <span class="n">toSpecificModel</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="p">(</span><span class="n">jsonMap</span><span class="p">);</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">User myUser <span style="color:#f92672">=</span> toSpecificModel<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span>(jsonMap);
 </code></pre></div><h2 id="http-통신하여-model에-담기">http 통신하여 Model에 담기</h2>
 <p>이제 본격적으로 http통신을 하여 Model로 받아보도록 하자.<br>
 먼저 기본적으로 다음의 라이브러리가 필요하다.<br>
 (Dart 개발 팀 공식 라이브러리)</p>
-<div class="highlight"><pre class="chroma"><code class="language-dart" data-lang="dart"><span class="k">import</span> <span class="s1">&#39;package:http/http.dart&#39;</span><span class="p">;</span>
-<span class="k">import</span> <span class="s1">&#39;dart:convert&#39;</span><span class="p">;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;package:http/http.dart&#39;</span>;
+<span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#39;dart:convert&#39;</span>;
 </code></pre></div><p>위 라이브러리를 추가하면 <code>Client()</code>함수로 http Client객체를 생성할 수 있고, <code>json.decode(String resource)</code>함수를 통해 Json형태의 String을 Map으로 변환할 수 있다.<br>
 <strong>(http.dart의 response body는 byte 혹은 String으로만 전달 받을 수 있기 때문.)</strong><br>
 그 후 Api클래스를 아래와 같이 구성하자.
