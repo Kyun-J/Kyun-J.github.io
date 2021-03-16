@@ -150,9 +150,9 @@
 
                   
                   <span class="file-info-divider"></span>
-                  Modified <relative-time datetime="Mon, 15 Mar 2021 17:59:20 &#43;0900"
+                  Modified <relative-time datetime="Tue, 16 Mar 2021 09:42:46 &#43;0900"
                     class="no-wrap">
-                    Mon, 15 Mar 2021 17:59:20 &#43;0900</relative-time>
+                    Tue, 16 Mar 2021 09:42:46 &#43;0900</relative-time>
                   
                 </div>
               </div>
@@ -170,7 +170,7 @@
               <div class="file-header d-flex flex-md-items-center flex-items-start">
                 <div class="file-info d-flex flex-md-items-center flex-items-start flex-order-1 flex-auto">
                   <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
-                    2421 Words
+                    1829 Words
                     
 
                   </div>
@@ -198,55 +198,26 @@ Dart의 아래 특징을 사용하면 충분히 가능할거란 판단이 들어
 </ol>
 <h2 id="기본-model클래스-생성">기본 Model클래스 생성</h2>
 <p>모든 Model객체의 부모가 될 Model 클래스를 생성하자.</p>
-<div class="highlight"><pre class="chroma"><code class="language-dart" data-lang="dart"><span class="n">Class</span> <span class="n">Model</span> <span class="p">{}</span>
+<div class="highlight"><pre class="chroma"><code class="language-dart" data-lang="dart"><span class="kd">class</span> <span class="nc">Model</span> <span class="p">{}</span>
 </code></pre></div><p>Model클래스는 일단 아무런 기능이 필요 없다. 모든 Model객체는 Model클래스를 extends 할 것이고, 이를 통해 1차 타입 체크를 할 것이다.<br>
 추가로, 모든 Model객체들에게 공통적인 기능이 필요하다면 해당 클래스에 구현하면 된다.</p>
 <h3 id="서버로부터-기본공통적인-정보를-저장할-res-클래스">서버로부터 기본(공통)적인 정보를 저장할 Res 클래스</h3>
 <p>서버로부터 단순히 요청의 데이터만 받는 경우는 드물다.<br>
-응답코드, 응답메시지, 에러코드 등 여러 추가적인 정보를 포함 할 Res 클래스를 생성하자.</p>
-<div class="highlight"><pre class="chroma"><code class="language-dart" data-lang="dart"><span class="kd">class</span> <span class="nc">Res</span><span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">Model</span><span class="o">&gt;</span> <span class="p">{</span>
-  <span class="kd">final</span> <span class="n">T</span><span class="o">?</span> <span class="n">data</span><span class="p">;</span> <span class="c1">// 응답 데이터(Model)
-</span><span class="c1"></span>  <span class="kd">final</span> <span class="kt">String</span><span class="o">?</span> <span class="n">message</span><span class="p">;</span> <span class="c1">// 서버 메시지
-</span><span class="c1"></span>  <span class="kd">final</span> <span class="kt">int</span><span class="o">?</span> <span class="n">serverCode</span><span class="p">;</span> <span class="c1">// 서버 코드
-</span><span class="c1"></span>  <span class="kd">final</span> <span class="kt">String</span><span class="o">?</span> <span class="n">errorMessage</span><span class="p">;</span> <span class="c1">// 서버 에러 메시지
-</span><span class="c1"></span>
-  <span class="kd">final</span> <span class="kt">int</span><span class="o">?</span> <span class="n">statusCode</span><span class="p">;</span> <span class="c1">// http 상태 코드
-</span><span class="c1"></span>  <span class="kd">final</span> <span class="kt">bool</span> <span class="n">isSuccess</span><span class="p">;</span> <span class="c1">// 통신의 성공 여부
-</span><span class="c1"></span>  <span class="kd">final</span> <span class="kt">bool</span> <span class="n">isException</span><span class="p">;</span> <span class="c1">// 통신중 Exception 발생 여부
-</span><span class="c1"></span>
-  <span class="n">Res</span><span class="p">(</span>
-      <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="n">data</span><span class="p">,</span>
-      <span class="k">this</span><span class="p">.</span><span class="n">message</span><span class="p">,</span>
-      <span class="k">this</span><span class="p">.</span><span class="n">serverCode</span><span class="p">,</span>
-      <span class="k">this</span><span class="p">.</span><span class="n">statusCode</span><span class="p">,</span>
-      <span class="k">this</span><span class="p">.</span><span class="n">errorMessage</span><span class="p">,</span>
-      <span class="n">required</span> <span class="k">this</span><span class="p">.</span><span class="n">isSuccess</span><span class="p">,</span>
-      <span class="n">required</span> <span class="k">this</span><span class="p">.</span><span class="n">isException</span><span class="p">});</span>
-<span class="p">}</span>
-</code></pre></div><p>이때, 서버로부터 전달 받을 데이터를 Model객체로 하며 Generic을 통해 원하는 모델을 전달받고 타입 검증을 할 수 있도록 구성하자.</p>
+응답코드, 응답메시지, 에러코드 등 여러 추가적인 정보를 포함 할 Res 클래스를 생성하자.<br>
+<script type="application/javascript" src="https://gist.github.com/Kyun-J/e4323ad4c85a3a06888c54e8449addea.js?file=res.dart"></script>
+
+이때, 서버로부터 전달 받을 데이터를 Model객체로 하며 Generic을 통해 원하는 모델을 전달받고 타입 검증을 할 수 있도록 구성하자.</p>
 <h3 id="실제-사용할-model클래스-생성">실제 사용할 Model클래스 생성</h3>
-<p>실제 데이터를 포함할 간단한 Model을 생성하자.</p>
-<div class="highlight"><pre class="chroma"><code class="language-dart" data-lang="dart"><span class="kd">class</span> <span class="nc">User</span> <span class="kd">extends</span> <span class="n">Model</span><span class="p">{</span>
-  <span class="kd">final</span> <span class="kt">String</span> <span class="n">id</span><span class="p">;</span>
-  <span class="kd">final</span> <span class="kt">String</span> <span class="n">name</span><span class="p">;</span>
+<p>실제 데이터를 포함할 간단한 Model을 생성하자.
+<script type="application/javascript" src="https://gist.github.com/Kyun-J/e4323ad4c85a3a06888c54e8449addea.js?file=user.dart"></script>
 
-  <span class="n">User</span><span class="p">({</span><span class="n">required</span> <span class="k">this</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">required</span> <span class="k">this</span><span class="p">.</span><span class="n">name</span><span class="p">});</span>
-
-  <span class="kd">factory</span> <span class="n">User</span><span class="p">.</span><span class="n">fromJson</span><span class="p">(</span><span class="n">Map</span> <span class="n">json</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">User</span><span class="p">(</span><span class="nl">id:</span> <span class="n">json</span><span class="p">[</span><span class="s2">&#34;id&#34;</span><span class="p">],</span> <span class="nl">name:</span> <span class="n">json</span><span class="p">[</span><span class="s2">&#34;name&#34;</span><span class="p">]);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>factory를 통해 fromJson 생성자를 만들고, Map을 전달하면 자동으로 클래스를 생성하도록 구성하자.<br>
+factory를 통해 fromJson 생성자를 만들고, Map을 전달하면 자동으로 클래스를 생성하도록 구성하자.<br>
 또한 새로운 Model 클래스를 구성할 때 factory fromJson을 통해 Map으로 객체를 생성하도록 하자.</p>
 <h3 id="map을-특정-model로-변환">Map을 특정 Model로 변환</h3>
-<p>각 Model의 fromJson을 호출하여 Map을 Model로 변환할 함수를 하나 만들도록 하자.</p>
-<div class="highlight"><pre class="chroma"><code class="language-dart" data-lang="dart"><span class="n">T</span> <span class="n">toSpecificModel</span><span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">Model</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Map</span> <span class="n">json</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">switch</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="nl">User:</span> <span class="k">return</span> <span class="n">User</span><span class="p">.</span><span class="n">fromJson</span><span class="p">(</span><span class="n">json</span><span class="p">)</span> <span class="o">as</span> <span class="n">T</span><span class="p">;</span>
-    <span class="k">default</span><span class="o">:</span> <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s2">&#34;Not Model Type&#34;</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>위 함수는 아래와 같이 사용할 수 있을 것 이다.</p>
+<p>각 Model의 fromJson을 호출하여 Map을 Model로 변환할 함수를 하나 만들도록 하자.
+<script type="application/javascript" src="https://gist.github.com/Kyun-J/e4323ad4c85a3a06888c54e8449addea.js?file=toSpecificModel.dart"></script>
+
+위 함수는 아래와 같이 사용할 수 있을 것 이다.</p>
 <div class="highlight"><pre class="chroma"><code class="language-dart" data-lang="dart"><span class="n">User</span> <span class="n">myUser</span> <span class="o">=</span> <span class="n">toSpecificModel</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="p">(</span><span class="n">jsonMap</span><span class="p">);</span>
 </code></pre></div><h2 id="http-통신하여-model에-담기">http 통신하여 Model에 담기</h2>
 <p>이제 본격적으로 http통신을 하여 Model로 받아보도록 하자.<br>
@@ -256,84 +227,14 @@ Dart의 아래 특징을 사용하면 충분히 가능할거란 판단이 들어
 <span class="k">import</span> <span class="s1">&#39;dart:convert&#39;</span><span class="p">;</span>
 </code></pre></div><p>위 라이브러리를 추가하면 <code>Client()</code>함수로 http Client객체를 생성할 수 있고, <code>json.decode(String resource)</code>함수를 통해 Json형태의 String을 Map으로 변환할 수 있다.<br>
 <strong>(http.dart의 response body는 byte 혹은 String으로만 전달 받을 수 있기 때문.)</strong><br>
-그 후 Api클래스를 아래와 같이 구성하자.</p>
-<div class="highlight"><pre class="chroma"><code class="language-dart" data-lang="dart"><span class="kd">class</span> <span class="nc">Api</span> <span class="p">{</span>
-  <span class="n">late</span> <span class="kd">final</span> <span class="kt">String</span> <span class="n">baseUrl</span><span class="p">;</span>
-  <span class="n">late</span> <span class="kd">final</span> <span class="kt">bool</span> <span class="n">isSecure</span><span class="p">;</span>
-
-  <span class="n">Api</span><span class="p">({</span><span class="n">required</span> <span class="kt">String</span> <span class="n">baseUrl</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">isSecure</span> <span class="o">=</span> <span class="kc">true</span><span class="p">});</span>
-
-  <span class="n">Future</span><span class="o">&lt;</span><span class="n">Res</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="kd">get</span><span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">Model</span><span class="o">&gt;</span><span class="p">(</span>
-      <span class="p">{</span><span class="n">required</span> <span class="kt">String</span> <span class="n">url</span><span class="p">,</span>
-      <span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">String</span><span class="o">&gt;?</span> <span class="n">headers</span><span class="p">,</span>
-      <span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">dynamic</span><span class="o">&gt;?</span> <span class="n">querys</span><span class="p">})</span> <span class="kd">async</span> <span class="p">{</span>
-    <span class="kd">final</span> <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">();</span>
-    <span class="k">try</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="n">_genRes</span><span class="p">(</span>
-        <span class="kd">await</span> <span class="n">client</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="n">_genUri</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">querys</span><span class="p">),</span> <span class="nl">headers:</span> <span class="n">genDefaultHeaders</span><span class="p">(</span><span class="n">headers</span><span class="p">))</span>
-      <span class="p">);</span>
-    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">stacktrace</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">print</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
-      <span class="n">print</span><span class="p">(</span><span class="n">stacktrace</span><span class="p">);</span>
-      <span class="k">return</span> <span class="n">Res</span><span class="p">(</span><span class="nl">isSuccess:</span> <span class="kc">false</span><span class="p">,</span> <span class="nl">isException:</span> <span class="kc">true</span><span class="p">);</span>
-    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
-      <span class="n">client</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-
-  <span class="p">...</span> <span class="n">post</span><span class="p">,</span> <span class="n">delete</span><span class="p">,</span> <span class="n">put</span><span class="p">,</span> <span class="n">patch</span> <span class="err">등</span> <span class="err">구성</span> <span class="p">...</span>
-
-  <span class="n">Uri</span> <span class="n">_genUri</span><span class="p">(</span><span class="kt">String</span> <span class="n">url</span><span class="p">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">dynamic</span><span class="o">&gt;?</span> <span class="n">querys</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">final</span> <span class="n">Uri</span> <span class="n">uri</span><span class="p">;</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">isSecure</span><span class="p">)</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="n">Uri</span><span class="p">.</span><span class="n">https</span><span class="p">(</span><span class="n">baseUrl</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">querys</span><span class="p">);</span>
-      <span class="k">else</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="n">Uri</span><span class="p">.</span><span class="n">http</span><span class="p">(</span><span class="n">baseUrl</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">querys</span><span class="p">);</span>
-    <span class="k">return</span> <span class="n">uri</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="n">Res</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">_genRes</span><span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">Model</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Response</span> <span class="n">response</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Map</span> <span class="n">body</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">body</span><span class="p">);</span>
-    <span class="k">return</span> <span class="n">Res</span><span class="p">(</span>
-        <span class="nl">serverCode:</span> <span class="n">body</span><span class="p">[</span><span class="s2">&#34;serverCode&#34;</span><span class="p">],</span>
-        <span class="nl">message:</span> <span class="n">body</span><span class="p">[</span><span class="s2">&#34;message&#34;</span><span class="p">],</span>
-        <span class="nl">statusCode:</span> <span class="n">response</span><span class="p">.</span><span class="n">statusCode</span><span class="p">,</span>
-        <span class="nl">errorMessage:</span> <span class="n">body</span><span class="p">[</span><span class="s2">&#34;errorMessage&#34;</span><span class="p">],</span>
-        <span class="nl">data:</span> <span class="n">toSpecificModel</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">body</span><span class="p">[</span><span class="s2">&#34;data&#34;</span><span class="p">]),</span>
-        <span class="nl">isSuccess:</span> <span class="n">response</span><span class="p">.</span><span class="n">statusCode</span> <span class="o">&lt;</span> <span class="m">400</span><span class="p">,</span>
-        <span class="nl">isException:</span> <span class="kc">false</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">String</span><span class="o">&gt;</span> <span class="n">genDefaultHeaders</span><span class="p">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">String</span><span class="o">&gt;?</span> <span class="n">headers</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">headers</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">{};</span>
-  <span class="p">}</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">headers</span><span class="p">[</span><span class="s2">&#34;Content-Type&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">headers</span><span class="p">[</span><span class="s2">&#34;Content-Type&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;application/x-www-form-urlencode&#34;</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="k">return</span> <span class="n">headers</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div><h3 id="차근차근-뜯어보자">차근차근 뜯어보자</h3>
-<p>Api클래스의 get 함수를 분석해보자.</p>
-<div class="highlight"><pre class="chroma"><code class="language-dart" data-lang="dart"><span class="n">Future</span><span class="o">&lt;</span><span class="n">Res</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="kd">get</span><span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">Model</span><span class="o">&gt;</span><span class="p">(</span>
-    <span class="p">{</span><span class="n">required</span> <span class="kt">String</span> <span class="n">url</span><span class="p">,</span>
-    <span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">String</span><span class="o">&gt;?</span> <span class="n">headers</span><span class="p">,</span>
-    <span class="n">Map</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">dynamic</span><span class="o">&gt;?</span> <span class="n">querys</span><span class="p">})</span> <span class="kd">async</span> <span class="p">{</span>
-    <span class="kd">final</span> <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">();</span>
-    <span class="k">try</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">_genRes</span><span class="p">(</span>
-        <span class="kd">await</span> <span class="n">client</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="n">_genUri</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">querys</span><span class="p">),</span> <span class="nl">headers:</span> <span class="n">genDefaultHeaders</span><span class="p">(</span><span class="n">headers</span><span class="p">))</span>
-        <span class="p">);</span>
-    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">stacktrace</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">print</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
-        <span class="n">print</span><span class="p">(</span><span class="n">stacktrace</span><span class="p">);</span>
-        <span class="k">return</span> <span class="n">Res</span><span class="p">(</span><span class="nl">isSuccess:</span> <span class="kc">false</span><span class="p">,</span> <span class="nl">isException:</span> <span class="kc">true</span><span class="p">);</span>
-    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
-        <span class="n">client</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><ol>
+그 후 Api클래스를 아래와 같이 구성하자.
+<script type="application/javascript" src="https://gist.github.com/Kyun-J/e4323ad4c85a3a06888c54e8449addea.js?file=Api.dart"></script>
+</p>
+<h3 id="차근차근-뜯어보자">차근차근 뜯어보자</h3>
+<p>Api클래스의 get 함수를 분석해보자.
+<script type="application/javascript" src="https://gist.github.com/Kyun-J/e4323ad4c85a3a06888c54e8449addea.js?file=get.dart"></script>
+</p>
+<ol>
 <li>client 객체의 리턴은 비동기(Future)를 통해 전달된다.
 <ol>
 <li>따라서 get 함수 또한, async await를 구성하고 Future를 리턴하도록 구성.</li>
@@ -347,77 +248,25 @@ Dart의 아래 특징을 사용하면 충분히 가능할거란 판단이 들어
 </li>
 </ol>
 <h3 id="genres">genRes</h3>
-<p>genRes함수에는 중요 기능들이 포함되어 있다.</p>
-<div class="highlight"><pre class="chroma"><code class="language-dart" data-lang="dart"><span class="n">Res</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">_genRes</span><span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">Model</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Response</span> <span class="n">response</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// http response의 body를 Map으로 변환
-</span><span class="c1"></span>    <span class="n">Map</span> <span class="n">body</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">body</span><span class="p">);</span>
-    <span class="k">return</span> <span class="n">Res</span><span class="p">(</span>
-        <span class="nl">serverCode:</span> <span class="n">body</span><span class="p">[</span><span class="s2">&#34;serverCode&#34;</span><span class="p">],</span>
-        <span class="nl">message:</span> <span class="n">body</span><span class="p">[</span><span class="s2">&#34;message&#34;</span><span class="p">],</span>
-        <span class="nl">statusCode:</span> <span class="n">response</span><span class="p">.</span><span class="n">statusCode</span><span class="p">,</span>
-        <span class="nl">errorMessage:</span> <span class="n">body</span><span class="p">[</span><span class="s2">&#34;errorMessage&#34;</span><span class="p">],</span>
-        <span class="c1">// 서버에서 전달받은 실제 데이터를 Model로 변환
-</span><span class="c1"></span>        <span class="nl">data:</span> <span class="n">toSpecificModel</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">body</span><span class="p">[</span><span class="s2">&#34;data&#34;</span><span class="p">]),</span>
-        <span class="nl">isSuccess:</span> <span class="n">response</span><span class="p">.</span><span class="n">statusCode</span> <span class="o">&lt;</span> <span class="m">400</span><span class="p">,</span>
-        <span class="nl">isException:</span> <span class="kc">false</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div><p>json.decode를 통해 response의 body를 Map으로 변환 후, 먼저 선언하였던 toSepcificModel 함수를 통해 원하는 Model로 Map을 변환하여 최종적으로 Model이 포함된 결과값을 받게 된다!</p>
-<h3 id="정리하면"><strong>정리하면&hellip;</strong></h3>
-<p>현재까지 진행사항을 통해, 아래와 같이 http통신을 하고 User Model을 결과값으로 전달 받을 수 있다.</p>
-<div class="highlight"><pre class="chroma"><code class="language-dart" data-lang="dart"><span class="c1">// http://localhost:8000/ 을 기본 url로 사용
-</span><span class="c1"></span><span class="kd">final</span> <span class="n">api</span> <span class="o">=</span> <span class="n">Api</span><span class="p">(</span><span class="nl">baseUrl:</span> <span class="s2">&#34;localhost:8000&#34;</span><span class="p">,</span> <span class="nl">isSecure:</span> <span class="kc">false</span><span class="p">);</span>
+<p>genRes함수에는 중요 기능들이 포함되어 있다.
+<script type="application/javascript" src="https://gist.github.com/Kyun-J/e4323ad4c85a3a06888c54e8449addea.js?file=_genRes.dart"></script>
 
-<span class="c1">// /getUser 요청은 아래 json 데이터를 전달하도록 구성
-</span><span class="c1">// {
-</span><span class="c1">//  message: &#34;success!!&#34;,
-</span><span class="c1">//  serverCode: 100,
-</span><span class="c1">//  data: { id: &#34;user&#34;, name: &#34;I AM USER&#34; }
-</span><span class="c1">// }
-</span><span class="c1"></span>
-<span class="n">api</span><span class="p">.</span><span class="kd">get</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">url:</span> <span class="s2">&#34;/getUser&#34;</span><span class="p">)</span>
-<span class="p">.</span><span class="n">then</span><span class="p">((</span><span class="n">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">final</span> <span class="n">user</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="n">data</span><span class="p">;</span>
-    <span class="n">print</span><span class="p">(</span><span class="s2">&#34;message: </span><span class="si">${</span><span class="n">res</span><span class="p">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">);</span> <span class="c1">// &#34;success!!&#34;
-</span><span class="c1"></span>    <span class="n">print</span><span class="p">(</span><span class="s2">&#34;serverCode: </span><span class="si">${</span><span class="n">res</span><span class="p">.</span><span class="n">serverCode</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">);</span> <span class="c1">// 100
-</span><span class="c1"></span>    <span class="n">print</span><span class="p">(</span><span class="s2">&#34;statusCode: </span><span class="si">${</span><span class="n">res</span><span class="p">.</span><span class="n">statusCode</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">);</span> <span class="c1">// 200
-</span><span class="c1"></span>    <span class="n">print</span><span class="p">(</span><span class="s2">&#34;id: </span><span class="si">${</span><span class="n">user</span><span class="p">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">);</span> <span class="c1">// &#34;user&#34;
-</span><span class="c1"></span>    <span class="n">print</span><span class="p">(</span><span class="s2">&#34;name: </span><span class="si">${</span><span class="n">user</span><span class="p">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">);</span> <span class="c1">// &#34;I AM USER&#34;
-</span><span class="c1"></span>    <span class="n">print</span><span class="p">(</span><span class="s2">&#34;isSuccess: </span><span class="si">${</span><span class="n">res</span><span class="p">.</span><span class="n">isSuccess</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">);</span> <span class="c1">// true
-</span><span class="c1"></span>    <span class="n">print</span><span class="p">(</span><span class="s2">&#34;isException: </span><span class="si">${</span><span class="n">res</span><span class="p">.</span><span class="n">isException</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">);</span> <span class="c1">// false
-</span><span class="c1"></span><span class="p">});</span>
-</code></pre></div><h2 id="하지만-아직-부족하다"><strong>하지만 아직 부족하다!</strong></h2>
+json.decode를 통해 response의 body를 Map으로 변환 후, 먼저 선언하였던 toSepcificModel 함수를 통해 원하는 Model로 Map을 변환하여 최종적으로 Model이 포함된 결과값을 받게 된다!</p>
+<h3 id="정리하면"><strong>정리하면&hellip;</strong></h3>
+<p>현재까지 진행사항을 통해, 아래와 같이 http통신을 하고 User Model을 결과값으로 전달 받을 수 있다.
+<script type="application/javascript" src="https://gist.github.com/Kyun-J/e4323ad4c85a3a06888c54e8449addea.js?file=apiUse.dart"></script>
+</p>
+<h2 id="하지만-아직-부족하다"><strong>하지만 아직 부족하다!</strong></h2>
 <p>여기까지 진행해도 Model을 사용한 통신 구성에 문제는 없지만, Dart의 <code>mixin</code>을 활용하여 좀 더 고급스럽게 사용해 보자.</p>
 <h3 id="mixin-클래스-생성">mixin 클래스 생성</h3>
-<div class="highlight"><pre class="chroma"><code class="language-dart" data-lang="dart"><span class="n">mixin</span> <span class="n">UserApi</span> <span class="p">{</span>
-  <span class="n">Api</span> <span class="n">_api</span> <span class="o">=</span> <span class="n">Api</span><span class="p">(</span><span class="nl">baseUrl:</span> <span class="s2">&#34;localhost:8000&#34;</span><span class="p">,</span> <span class="nl">isSecure:</span> <span class="kc">false</span><span class="p">);</span>
+<p><script type="application/javascript" src="https://gist.github.com/Kyun-J/e4323ad4c85a3a06888c54e8449addea.js?file=UserApi.dart"></script>
 
-  <span class="n">Future</span><span class="o">&lt;</span><span class="n">User</span><span class="o">?&gt;</span> <span class="n">getUser</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
-    <span class="n">Res</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">res</span> <span class="o">=</span> <span class="kd">await</span> <span class="n">_api</span><span class="p">.</span><span class="kd">get</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">url:</span> <span class="s2">&#34;/getUser&#34;</span><span class="p">);</span>
-    <span class="k">return</span> <span class="n">res</span><span class="p">.</span><span class="n">data</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>먼저, Res<!-- raw HTML omitted --> 객체가 아닌 <code>Model</code> 자체를 반환받도록 한번 더 함수로 감싸자.<br>
+먼저, Res<!-- raw HTML omitted --> 객체가 아닌 <code>Model</code> 자체를 반환받도록 한번 더 함수로 감싸자.<br>
 그리고 <code>mixin</code>이기 때문에, 아래와 같이 실 사용이 가능하다.</p>
 <h3 id="최종-결과">최종 결과</h3>
-<div class="highlight"><pre class="chroma"><code class="language-dart" data-lang="dart"><span class="kd">class</span> <span class="nc">MyHomePage</span> <span class="kd">extends</span> <span class="n">StatefulWidget</span> <span class="p">{</span>
-  <span class="n">MyHomePage</span><span class="p">({</span><span class="n">Key</span><span class="o">?</span> <span class="n">key</span><span class="p">})</span> <span class="o">:</span> <span class="k">super</span><span class="p">(</span><span class="nl">key:</span> <span class="n">key</span><span class="p">);</span>
+<p><script type="application/javascript" src="https://gist.github.com/Kyun-J/e4323ad4c85a3a06888c54e8449addea.js?file=final.dart"></script>
 
-  <span class="err">@</span><span class="n">override</span>
-  <span class="n">_MyHomePageState</span> <span class="n">createState</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="n">_MyHomePageState</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="kd">class</span> <span class="nc">_MyHomePageState</span> <span class="kd">extends</span> <span class="n">State</span><span class="o">&lt;</span><span class="n">MyHomePage</span><span class="o">&gt;</span> <span class="kd">with</span> <span class="n">UserApi</span> <span class="p">{</span>
-  <span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">contItems</span> <span class="o">=</span> <span class="p">[];</span>
-
-  <span class="kt">void</span> <span class="n">_addUser</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
-    <span class="n">User</span><span class="o">?</span> <span class="n">newUser</span> <span class="o">=</span> <span class="kd">await</span> <span class="n">getUser</span><span class="p">();</span>
-    <span class="n">setState</span><span class="p">(()</span> <span class="p">{</span>
-      <span class="n">newUser</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">contItems</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">newUser</span><span class="p">)</span> <span class="o">:</span> <span class="n">print</span><span class="p">(</span><span class="s2">&#34;fail get user&#34;</span><span class="p">);</span>
-    <span class="p">});</span>
-    <span class="p">.....</span> <span class="err">기타</span> <span class="err">작업</span> <span class="p">....</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>상태 변경에따라 Widget을 빌드하는 클래스인 _MyHomePageState 클래스에 <code>with UserApi</code>를 추가하여, UserApi mixin에 선언한 함수를 바로 사용 할 수 있게 되었다.<br>
+상태 변경에따라 Widget을 빌드하는 클래스인 _MyHomePageState 클래스에 <code>with UserApi</code>를 추가하여, UserApi mixin에 선언한 함수를 바로 사용 할 수 있게 되었다.<br>
 이제 _addUser()를 호출할 때마다 리스트에 새로운 <code>User Model</code>이 <em><strong>서버와의 통신을 통해</strong></em> 추가되고, 이를 활용해 여러 작업(리스트를 추가한다던지&hellip;)이 가능할 것이다!</p>
 <h2 id="마무리">마무리&hellip;</h2>
 <p>Retrofit과 유사하게 http 통신을 하도록 구성해 보았습니다.<br>
