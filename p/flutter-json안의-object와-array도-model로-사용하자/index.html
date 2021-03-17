@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ko-kr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='(Flutter) Json안의 Object와 Array도 Model로 사용하자'><title>(Flutter) Json안의 Object와 Array도 Model로 사용하자</title>
+
+<link rel='canonical' href='https://kyun-j.github.io/p/flutter-json%EC%95%88%EC%9D%98-object%EC%99%80-array%EB%8F%84-model%EB%A1%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EC%9E%90/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='(Flutter) Json안의 Object와 Array도 Model로 사용하자'>
+<meta property='og:description' content='(Flutter) Json안의 Object와 Array도 Model로 사용하자'>
+<meta property='og:url' content='https://kyun-j.github.io/p/flutter-json%EC%95%88%EC%9D%98-object%EC%99%80-array%EB%8F%84-model%EB%A1%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EC%9E%90/'>
+<meta property='og:site_name' content='dvkyun blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Flutter' /><meta property='article:published_time' content='2021-03-17T16:43:55&#43;09:00'/><meta property='article:modified_time' content='2021-03-17T16:43:55&#43;09:00'/>
+<meta name="twitter:title" content="(Flutter) Json안의 Object와 Array도 Model로 사용하자">
+<meta name="twitter:description" content="(Flutter) Json안의 Object와 Array도 Model로 사용하자">
+    </head>
+    <body class="">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.body.dataset.scheme = 'dark';
+        } else {
+            document.body.dataset.scheme = 'light';
+        }
+    })();
+</script><div class="container main-container flex on-phone--column extended article-page with-toolbar">
+            <aside class="sidebar left-sidebar sticky">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header class="site-info">
+        
+            <figure class="site-avatar">
+                
+                    
+                    
+                    
+                        
+                        <img src="/images/17011240_hu4f9ca08810d5fee49ae145d0e3ec7ed1_12190_300x0_resize_q75_box.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+
+                
+            </figure>
+        
+        <h1 class="site-name"><a href="https://kyun-j.github.io/">dvkyun blog</a></h1>
+        <h2 class="site-description">dvkyun blog</h2>
+    </header>
+
+    <ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        
+            <li id="dark-mode-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <span>Dark Mode</span>
+            </li>
+        
+    </ol>
+</aside>
+
+            <main class="main full-width">
+    <div id="article-toolbar">
+        <a href="https://kyun-j.github.io/" class="back-home">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+            <span>Back</span>
+        </a>
+    </div>
+
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/flutter/" >
+                Flutter
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/flutter-json%EC%95%88%EC%9D%98-object%EC%99%80-array%EB%8F%84-model%EB%A1%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EC%9E%90/">(Flutter) Json안의 Object와 Array도 Model로 사용하자</a>
+    </h2>
+
+    <footer class="article-time">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <time class="article-time--published">Mar 17, 2021</time>
+    </footer></div>
+</header>
+
+    <section class="article-content">
+    <h1 id="json안의-obejct와-array도-model-class로-사용하고-싶다">Json안의 Obejct와 Array도 Model Class로 사용하고 싶다!</h1>
+<p><a class="link" href="../flutter-model%ec%9d%84-%eb%b2%a0%ec%9d%b4%ec%8a%a4%eb%a1%9c-%ed%95%9c-http%ed%86%b5%ec%8b%a0%ec%9d%84-%ea%b5%ac%ec%84%b1%ed%95%b4-%eb%b3%b4%ec%9e%90" >지난 포스트</a> 에서 http 통신의 결과값(Json)을 Model Class로 받는 방법에 대해 설명하였다.<br>
+해당 포스트에선 예시로 단순한 Json 형태를 들었지만, 실제 현장에서는 훨신 복잡한<br>
+<strong>(Json 안에 또다른 Object 혹은 Array가 있는)</strong> 형태의 Json들을 다루게 된다.<br>
+이런 경우에도 Model Class로 Json의 내용을 치환하여 사용해 보자!</p>
+<h2 id="필요한-model을-만들자">필요한 Model을 만들자</h2>
+<p>다음과 같은 Json을 다룬다고 가정해 보자.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">{ 
+    <span style="color:#a6e22e">id</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;user&#34;</span>,
+    <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;I AM USER&#34;</span>,
+    <span style="color:#a6e22e">address</span><span style="color:#f92672">:</span> [
+        {
+            <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;home&#34;</span>,
+            <span style="color:#a6e22e">detail</span><span style="color:#f92672">:</span> { <span style="color:#a6e22e">first</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;korea&#34;</span>, <span style="color:#a6e22e">second</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;seoul&#34;</span> },
+            <span style="color:#a6e22e">zipCode</span><span style="color:#f92672">:</span> { <span style="color:#a6e22e">old</span><span style="color:#f92672">:</span> { <span style="color:#a6e22e">code</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;123456&#34;</span> }, <span style="color:#66d9ef">new</span><span style="color:#f92672">:</span> { <span style="color:#a6e22e">code</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;7890&#34;</span> } }
+        }
+    ] 
+}
+</code></pre></div><p><a class="link" href="../flutter-model%ec%9d%84-%eb%b2%a0%ec%9d%b4%ec%8a%a4%eb%a1%9c-%ed%95%9c-http%ed%86%b5%ec%8b%a0%ec%9d%84-%ea%b5%ac%ec%84%b1%ed%95%b4-%eb%b3%b4%ec%9e%90" >지난 포스트</a>의 User Model에서 address가 추가된 형태이다.<br>
+address는 List 형태로서 복수개의 Object를 가질 수 있다.<br>
+각각의 Object는 이름 - name(String), 상세 주소 - detail(Object), 우편번호 - zipCode(Object) 가 있으며,<br>
+zipCode의 각각 항목은 또다른 Object로 구성되어 있다.<br>
+먼저 복잡한 이 Json의 각 항목을 Model로 작성해 보자.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#75715e">/// 가장 최상위 User Model
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span> <span style="color:#66d9ef">extends</span> Model {
+  <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">String</span> id;
+  <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">String</span> name;
+  <span style="color:#66d9ef">final</span> List<span style="color:#f92672">&lt;</span>Address<span style="color:#f92672">&gt;</span> address;
+}
+
+<span style="color:#75715e">/// List 내의 각 주소 Model
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Address</span> <span style="color:#66d9ef">extends</span> Model {
+  <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">String</span> name;
+  <span style="color:#66d9ef">final</span> Map<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">String</span>, ZipCode<span style="color:#f92672">&gt;</span> zipCode;
+  <span style="color:#66d9ef">final</span> AddressDetail detail;
+}
+
+<span style="color:#75715e">/// 상세 주소 Model
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AddressDetail</span> <span style="color:#66d9ef">extends</span> Model {
+  <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">String</span> first;
+  <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">String</span> second;
+}
+
+<span style="color:#75715e">/// 우편 번호 code Model
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ZipCode</span> <span style="color:#66d9ef">extends</span> Model {
+  <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">String</span> code;
+}
+</code></pre></div><p>총 3가지의 케이스를 기준으로 Model을 구성하였다.</p>
+<ol>
+<li>Array안의 Object를 다룰 경우 - <code>final List&lt;Address&gt; address;</code></li>
+<li>Object를 바로 Model로 다루는 경우 - <code>final AddressDetail detail;</code></li>
+<li>Object안의 또다른 Object가 있어, Map으로 다루는 경우 - <code>final Map&lt;String, ZipCode&gt; zipCode;</code></li>
+</ol>
+<p>이어서 Json을 각 Model Class 안에 옮기는 작업을 진행해 보자.</p>
+<h2 id="array와-object를-model로-변환">Array와 Object를 Model로 변환</h2>
+<p><a class="link" href="../flutter-model%ec%9d%84-%eb%b2%a0%ec%9d%b4%ec%8a%a4%eb%a1%9c-%ed%95%9c-http%ed%86%b5%ec%8b%a0%ec%9d%84-%ea%b5%ac%ec%84%b1%ed%95%b4-%eb%b3%b4%ec%9e%90" >지난 포스트</a>에선 아래의 함수를 구성하였다.
+<script type="application/javascript" src="https://gist.github.com/Kyun-J/e4323ad4c85a3a06888c54e8449addea.js?file=toSpecificModel.dart"></script>
+</p>
+<p>먼저, <code>toSpecificModel</code>함수에 이번에 새로 추가한 함수들을 <code>Switch</code>조건에 포함시키자.
+<script type="application/javascript" src="https://gist.github.com/Kyun-J/edc4cbfb99d0768cc430a6f48d0711f4.js?file=toSpecificModel.dart"></script>
+</p>
+<p>다음으로 <code>Array -&gt; List&lt;Model&gt;</code>, <code>Object -&gt; Map&lt;String, Model&gt;</code>으로 변환시킬 함수를 제작하자.<br>
+(<code>Object -&gt; Map</code>의 경우에는, <code>toSpecificModel</code>을 사용하면 된다.)</p>
+<h3 id="array를-listmodel로-변환할-tospecificmodellist-함수">Array를 List<!-- raw HTML omitted -->로 변환할 <em><strong>toSpecificModelList</strong></em> 함수</h3>
+<script type="application/javascript" src="https://gist.github.com/Kyun-J/edc4cbfb99d0768cc430a6f48d0711f4.js?file=toSpecificModelList.dart"></script>
+
+<h3 id="object를-mapstring-model로-변환할-tospecificmodelmap-함수">Object를 Map&lt;String, Model&gt;로 변환할 <em><strong>toSpecificModelMap</strong></em> 함수</h3>
+<script type="application/javascript" src="https://gist.github.com/Kyun-J/edc4cbfb99d0768cc430a6f48d0711f4.js?file=toSpecificModelMap.dart"></script>
+
+<h3 id="마지막으로-각-model들의-생성자를-구성하자">마지막으로, 각 Model들의 생성자를 구성하자.</h3>
+<p>이때, 각 Model이 포함 할 또다른 Model들을 <em><strong>위에 구성한 함수들을 사용하여(중요)</strong></em> 생성하도록 하자!
+<script type="application/javascript" src="https://gist.github.com/Kyun-J/edc4cbfb99d0768cc430a6f48d0711f4.js?file=models.dart"></script>
+</p>
+<h2 id="테스트">테스트</h2>
+<p><a class="link" href="../flutter-model%ec%9d%84-%eb%b2%a0%ec%9d%b4%ec%8a%a4%eb%a1%9c-%ed%95%9c-http%ed%86%b5%ec%8b%a0%ec%9d%84-%ea%b5%ac%ec%84%b1%ed%95%b4-%eb%b3%b4%ec%9e%90" >지난 포스트</a>의 response를</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">{ 
+    <span style="color:#a6e22e">id</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;user&#34;</span>,
+    <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;I AM USER&#34;</span>,
+    <span style="color:#a6e22e">address</span><span style="color:#f92672">:</span> [
+        {
+            <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;home&#34;</span>,
+            <span style="color:#a6e22e">detail</span><span style="color:#f92672">:</span> { <span style="color:#a6e22e">first</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;korea&#34;</span>, <span style="color:#a6e22e">second</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;seoul&#34;</span> },
+            <span style="color:#a6e22e">zipCode</span><span style="color:#f92672">:</span> { <span style="color:#a6e22e">old</span><span style="color:#f92672">:</span> { <span style="color:#a6e22e">code</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;123456&#34;</span> }, <span style="color:#66d9ef">new</span><span style="color:#f92672">:</span> { <span style="color:#a6e22e">code</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;7890&#34;</span> } }
+        }
+    ] 
+}
+</code></pre></div><p>로 변경하고 <code>getNewUser</code> 함수를 아래와 같이 수정하여 테스트를 진행하자.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">Future<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">?&gt;</span> getNewUser() <span style="color:#66d9ef">async</span> {
+    Res<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span> res <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> _api.post<span style="color:#f92672">&lt;</span>User<span style="color:#f92672">&gt;</span>(url: <span style="color:#e6db74">&#34;/getUser&#34;</span>);
+    <span style="color:#66d9ef">final</span> user <span style="color:#f92672">=</span> res.data; <span style="color:#75715e">// 유저 데이터
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">final</span> firstAddress <span style="color:#f92672">=</span> user<span style="color:#f92672">?</span>.address[<span style="color:#ae81ff">0</span>]; <span style="color:#75715e">// Address Model
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">final</span> firstAddressName <span style="color:#f92672">=</span> firstAddress<span style="color:#f92672">?</span>.name; <span style="color:#75715e">// Address Model의 name 상수
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">final</span> oldZipcode <span style="color:#f92672">=</span> firstAddress<span style="color:#f92672">?</span>.zipCode[<span style="color:#e6db74">&#34;old&#34;</span>]; <span style="color:#75715e">// zipCode Object의 &#34;old&#34; Object
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">final</span> firstAddressDetail <span style="color:#f92672">=</span> firstAddress<span style="color:#f92672">?</span>.detail; <span style="color:#75715e">// Address Model의 detail Model
+</span><span style="color:#75715e"></span>    print(<span style="color:#e6db74">&#34;message: </span><span style="color:#e6db74">${</span>res.message<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>); <span style="color:#75715e">// &#34;success!!&#34;
+</span><span style="color:#75715e"></span>    print(<span style="color:#e6db74">&#34;serverCode: </span><span style="color:#e6db74">${</span>res.serverCode<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>); <span style="color:#75715e">// 100
+</span><span style="color:#75715e"></span>    print(<span style="color:#e6db74">&#34;statusCode: </span><span style="color:#e6db74">${</span>res.statusCode<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>); <span style="color:#75715e">// 200
+</span><span style="color:#75715e"></span>    print(<span style="color:#e6db74">&#34;addressName: </span><span style="color:#e6db74">$</span>firstAddressName<span style="color:#e6db74">&#34;</span>); <span style="color:#75715e">// home
+</span><span style="color:#75715e"></span>    print(<span style="color:#e6db74">&#34;addressDetail: </span><span style="color:#e6db74">${</span>firstAddressDetail<span style="color:#f92672">?</span>.first<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>); <span style="color:#75715e">// korea
+</span><span style="color:#75715e"></span>    print(<span style="color:#e6db74">&#34;oldZipCode: </span><span style="color:#e6db74">${</span>oldZipcode<span style="color:#f92672">?</span>.code<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>); <span style="color:#75715e">// 123456
+</span><span style="color:#75715e"></span>    print(<span style="color:#e6db74">&#34;isSuccess: </span><span style="color:#e6db74">${</span>res.isSuccess<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>); <span style="color:#75715e">// true
+</span><span style="color:#75715e"></span>    print(<span style="color:#e6db74">&#34;isException: </span><span style="color:#e6db74">${</span>res.isException<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>); <span style="color:#75715e">// false
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> res.data;
+}
+</code></pre></div><p>콘솔 창에 아래와 같이 출력될 것 이다.</p>
+<pre><code>message: success!!
+serverCode: 100
+statusCode: 200
+addressName: home
+addressDetail: korea
+oldZipCode: 123456
+isSuccess: true
+isException: false
+</code></pre><h2 id="마무리">마무리</h2>
+<p>Reflection을 할 수 있는 <code>dart:mirror</code> 라이브러리를 활용하면, <code>GsonConverter</code>와 같이 자동으로 Json의 내용을 Model Class의 구조에 맞게 담아주게 구성 할 수 있을것이다.<br>
+하지만, Reflection을 하지 않고도 Dart의 문법만으로도 충분히 실 사용이 가능할 정도(크게 러닝커브가 크지 않으면서) Json을 Model class로 사용 할 수 있도록 구성 해 보았다.<br>
+다음 포스트에는 Web과 Native의 플랫폼별 인터페이스를, 동일한 구조로 사용하는 과정을 포스트해 보도록 하겠다.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/flutter/">Flutter</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">Related contents</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/flutter-model%EC%9D%84-%EB%B2%A0%EC%9D%B4%EC%8A%A4%EB%A1%9C-%ED%95%9C-http%ED%86%B5%EC%8B%A0%EC%9D%84-%EA%B5%AC%EC%84%B1%ED%95%B4-%EB%B3%B4%EC%9E%90/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">(Flutter) Model을 베이스로 한 http통신을 구성해 보자</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "dvkyun" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2021 dvkyun blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="2.2.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
