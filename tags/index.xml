@@ -16,5 +16,23 @@
       <description></description>
     </item>
     
+    <item>
+      <title>Http</title>
+      <link>https://kyun-j.github.io/tags/http/</link>
+      <pubDate>Mon, 15 Mar 2021 13:15:51 +0900</pubDate>
+      
+      <guid>https://kyun-j.github.io/tags/http/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RESTFul</title>
+      <link>https://kyun-j.github.io/tags/restful/</link>
+      <pubDate>Mon, 15 Mar 2021 13:15:51 +0900</pubDate>
+      
+      <guid>https://kyun-j.github.io/tags/restful/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
