@@ -240,10 +240,10 @@ Dart의 아래 특징을 사용하면 충분히 가능할거란 판단이 들어
 <p>실제 데이터를 포함할 간단한 Model을 생성하자.
 <script type="application/javascript" src="https://gist.github.com/Kyun-J/e4323ad4c85a3a06888c54e8449addea.js?file=user.dart"></script>
 </p>
-<p>factory를 통해 fromJson 생성자를 만들고, Map을 전달하면 자동으로 클래스를 생성하도록 구성하자.<br>
-또한 새로운 Model 클래스를 구성할 때 factory fromJson을 통해 Map으로 객체를 생성하도록 하자.</p>
+<p>factory를 통해 새로운 생성자를 만들고, Map을 전달하면 자동으로 클래스를 생성하도록 구성하자.<br>
+또한 새로운 Model 클래스를 구성할 때에도 동일하게 Map으로 객체를 생성할 수 있는 구조를 만들자.</p>
 <h3 id="map을-특정-model로-변환">Map을 특정 Model로 변환</h3>
-<p>각 Model의 fromJson을 호출하여 Map을 Model로 변환할 함수를 하나 만들도록 하자.
+<p>각 Model의 factory 생성자 호출하여 Map을 Model로 변환할 함수를 하나 만들도록 하자.
 <script type="application/javascript" src="https://gist.github.com/Kyun-J/e4323ad4c85a3a06888c54e8449addea.js?file=toSpecificModel.dart"></script>
 </p>
 <p>위 함수는 아래와 같이 사용할 수 있을 것 이다.</p>
