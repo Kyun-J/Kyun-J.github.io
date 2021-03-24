@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="ko-kr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='WebView는 계륵이다 WebView를 사용하지 않을 수 없을까?  여러 프로젝트에서 WebView는 껄끄러운 존재입니다. Native의 아키텍쳐와는 별개로 구성하여야 하고, WebView만의 여러 설정법이 있기 때문입니다.. (수많은 버그는 덤이다)
-이런 WebView를 아예 사용하지 않으면 좋겠으나 기획, 마케팅에서 원하는 모든 정보 혹은 UI를 Native 영억에서 100% 컨트롤 할 수 없는 경우가 생기므로, 프로젝트 어딘가 한켠에 WebView를 사용해야 하는 경우가 생기기 마련이니다.
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='WebView는 계륵이다 WebView를 사용하지 않을 수 없을까?  여러 프로젝트에서 WebView는 껄끄러운 존재입니다. Native의 아키텍쳐와는 별개로 구성하여야 하고, WebView만의 여러 설정법이 있기 때문입니다. (수많은 버그는 덤이다)
+이런 WebView를 아예 사용하지 않으면 좋겠으나 기획, 마케팅에서 원하는 모든 정보 혹은 UI를 Native 영억에서 100% 컨트롤 할 수 없는 사항이 생기므로, 프로젝트 어딘가 한켠에 WebView를 사용해야 하는 경우가 많이 발생합니다.
  진짜 귀찮은 것은 인터페이스 WebView가 정말로 귀찮은 이유는 바로 WebPage와의 Interface입니다.
 대표적인 사항으로 다음과 같은 것들이 있는데,'><title>WebView &lt;-&gt; Native Interface 개선 라이브러리 소개</title>
 
 <link rel='canonical' href='https://kyun-j.github.io/p/webview-native-interface-%EA%B0%9C%EC%84%A0-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EC%86%8C%EA%B0%9C/'>
 
 <link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='WebView &lt;-&gt; Native Interface 개선 라이브러리 소개'>
-<meta property='og:description' content='WebView는 계륵이다 WebView를 사용하지 않을 수 없을까?  여러 프로젝트에서 WebView는 껄끄러운 존재입니다. Native의 아키텍쳐와는 별개로 구성하여야 하고, WebView만의 여러 설정법이 있기 때문입니다.. (수많은 버그는 덤이다)
-이런 WebView를 아예 사용하지 않으면 좋겠으나 기획, 마케팅에서 원하는 모든 정보 혹은 UI를 Native 영억에서 100% 컨트롤 할 수 없는 경우가 생기므로, 프로젝트 어딘가 한켠에 WebView를 사용해야 하는 경우가 생기기 마련이니다.
+<meta property='og:description' content='WebView는 계륵이다 WebView를 사용하지 않을 수 없을까?  여러 프로젝트에서 WebView는 껄끄러운 존재입니다. Native의 아키텍쳐와는 별개로 구성하여야 하고, WebView만의 여러 설정법이 있기 때문입니다. (수많은 버그는 덤이다)
+이런 WebView를 아예 사용하지 않으면 좋겠으나 기획, 마케팅에서 원하는 모든 정보 혹은 UI를 Native 영억에서 100% 컨트롤 할 수 없는 사항이 생기므로, 프로젝트 어딘가 한켠에 WebView를 사용해야 하는 경우가 많이 발생합니다.
  진짜 귀찮은 것은 인터페이스 WebView가 정말로 귀찮은 이유는 바로 WebPage와의 Interface입니다.
 대표적인 사항으로 다음과 같은 것들이 있는데,'>
 <meta property='og:url' content='https://kyun-j.github.io/p/webview-native-interface-%EA%B0%9C%EC%84%A0-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EC%86%8C%EA%B0%9C/'>
 <meta property='og:site_name' content='dvkyun blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Adroid' /><meta property='article:tag' content='iOS' /><meta property='article:tag' content='Webview' /><meta property='article:tag' content='WKWebView' /><meta property='article:tag' content='JavaScriptBridge' /><meta property='article:tag' content='UserContentController' /><meta property='article:published_time' content='2021-03-24T12:16:29&#43;09:00'/><meta property='article:modified_time' content='2021-03-24T12:16:29&#43;09:00'/>
 <meta name="twitter:title" content="WebView &lt;-&gt; Native Interface 개선 라이브러리 소개">
-<meta name="twitter:description" content="WebView는 계륵이다 WebView를 사용하지 않을 수 없을까?  여러 프로젝트에서 WebView는 껄끄러운 존재입니다. Native의 아키텍쳐와는 별개로 구성하여야 하고, WebView만의 여러 설정법이 있기 때문입니다.. (수많은 버그는 덤이다)
-이런 WebView를 아예 사용하지 않으면 좋겠으나 기획, 마케팅에서 원하는 모든 정보 혹은 UI를 Native 영억에서 100% 컨트롤 할 수 없는 경우가 생기므로, 프로젝트 어딘가 한켠에 WebView를 사용해야 하는 경우가 생기기 마련이니다.
+<meta name="twitter:description" content="WebView는 계륵이다 WebView를 사용하지 않을 수 없을까?  여러 프로젝트에서 WebView는 껄끄러운 존재입니다. Native의 아키텍쳐와는 별개로 구성하여야 하고, WebView만의 여러 설정법이 있기 때문입니다. (수많은 버그는 덤이다)
+이런 WebView를 아예 사용하지 않으면 좋겠으나 기획, 마케팅에서 원하는 모든 정보 혹은 UI를 Native 영억에서 100% 컨트롤 할 수 없는 사항이 생기므로, 프로젝트 어딘가 한켠에 WebView를 사용해야 하는 경우가 많이 발생합니다.
  진짜 귀찮은 것은 인터페이스 WebView가 정말로 귀찮은 이유는 바로 WebPage와의 Interface입니다.
 대표적인 사항으로 다음과 같은 것들이 있는데,">
 <script type="application/javascript">
@@ -242,9 +242,9 @@ if (!doNotTrack) {
     <h2 id="webview는-계륵이다">WebView는 계륵이다</h2>
 <h3 id="webview를-사용하지-않을-수-없을까">WebView를 사용하지 않을 수 없을까?</h3>
 <blockquote>
-<p>여러 프로젝트에서 WebView는 껄끄러운 존재입니다. Native의 아키텍쳐와는 별개로 구성하여야 하고, WebView만의 여러 설정법이 있기 때문입니다.. (수많은 버그는 덤이다)<br>
-이런 WebView를 아예 사용하지 않으면 좋겠으나 기획, 마케팅에서 원하는 모든 정보 혹은 UI를 Native 영억에서 100% 컨트롤 할 수 없는 경우가 생기므로,
-프로젝트 어딘가 한켠에 WebView를 사용해야 하는 경우가 생기기 마련이니다.</p>
+<p>여러 프로젝트에서 WebView는 껄끄러운 존재입니다. Native의 아키텍쳐와는 별개로 구성하여야 하고, WebView만의 여러 설정법이 있기 때문입니다. (수많은 버그는 덤이다)<br>
+이런 WebView를 아예 사용하지 않으면 좋겠으나 기획, 마케팅에서 원하는 모든 정보 혹은 UI를 Native 영억에서 100% 컨트롤 할 수 없는 사항이 생기므로,
+프로젝트 어딘가 한켠에 WebView를 사용해야 하는 경우가 많이 발생합니다.</p>
 </blockquote>
 <h3 id="진짜-귀찮은-것은-인터페이스">진짜 귀찮은 것은 인터페이스</h3>
 <p>WebView가 정말로 귀찮은 이유는 바로 <strong>WebPage와의 Interface</strong>입니다.<br>
