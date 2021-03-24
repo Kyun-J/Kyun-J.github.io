@@ -21,6 +21,17 @@
 이런 WebView를 아예 사용하지 않으면 좋겠으나 기획, 마케팅에서 원하는 모든 정보 혹은 UI를 Native 영억에서 100% 컨트롤 할 수 없는 경우가 생기므로, 프로젝트 어딘가 한켠에 WebView를 사용해야 하는 경우가 생기기 마련이니다.
  진짜 귀찮은 것은 인터페이스 WebView가 정말로 귀찮은 이유는 바로 WebPage와의 Interface입니다.
 대표적인 사항으로 다음과 같은 것들이 있는데,">
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-RGXW06G7XW', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
     </head>
     <body class="">
     <script>
@@ -279,6 +290,22 @@
 </span><span style="color:#75715e">// 첫번째 인자는 WebPage에서 사용할 인터페이스 함수명,
 </span><span style="color:#75715e">// 두번재 인자는 인터페이스 시 동작할 lambda
 </span><span style="color:#75715e"></span>mWebView.arrayInterface(<span style="color:#e6db74">&#34;testInterface&#34;</span>, testLambda)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">/*
+</span><span style="color:#75715e"> * iOS Swift
+</span><span style="color:#75715e"> */</span>
+
+<span style="color:#66d9ef">let</span> testClosure : FlexClosure.array = 
+{ arguments -&gt; Array&lt;Any?<span style="color:#f92672">&gt;?</span> <span style="color:#66d9ef">in</span> <span style="color:#75715e">// arguments에는 WebPage에서 전달받을 값들이 담겨 있음</span>
+    <span style="color:#66d9ef">return</span> [<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>]
+}
+
+<span style="color:#75715e">// FlexComponent WKWebViewConfiguration 을 포함하며 WebView에 Interface를 전달하기 위한 객체</span>
+<span style="color:#66d9ef">let</span> component = FlexComponent()
+<span style="color:#75715e">// WebView에 testClosure가 동작하는 testInterface 등록</span>
+<span style="color:#75715e">// 첫번째 인자는 WebPage에서 사용할 인터페이스 함수명,</span>
+<span style="color:#75715e">// 두번재 인자는 인터페이스 시 동작할 lambda</span>
+component.arrayInterface(<span style="color:#e6db74">&#34;testInterface&#34;</span>, testClosure)
+<span style="color:#66d9ef">let</span> mWebView = FlexWebView(frame: <span style="color:#66d9ef">self</span>.view.frame, component: component)
 </code></pre></div><ol start="2">
 <li>WebPage에서 함수 사용</li>
 </ol>
@@ -286,8 +313,14 @@
 </span><span style="color:#75715e"> * Android Kotlin
 </span><span style="color:#75715e"> */</span>
 
-<span style="color:#75715e">// WebView에 웹페이지를 로드하는 시점에 WebPage에 인터페이스가 자동으로 등록.
+<span style="color:#75715e">// WebView를 로드하면, WebPage에 인터페이스가 자동으로 등록.
 </span><span style="color:#75715e"></span>mWebView.loadUrl(someUrl)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">/*
+</span><span style="color:#75715e"> * iOS Swift
+</span><span style="color:#75715e"> */</span>
+
+<span style="color:#75715e">// WebView를 로드하면, WebPage에 인터페이스가 자동으로 등록.</span>
+mWebView.load(someUrl)
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#75715e">/*
 </span><span style="color:#75715e"> * WebPage
 </span><span style="color:#75715e"> */</span>
