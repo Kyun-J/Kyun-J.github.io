@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Webview on dvkyun blog</title>
+    <link>https://kyun-j.github.io/tags/webview/</link>
+    <description>Recent content in Webview on dvkyun blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-kr</language>
+    <lastBuildDate>Wed, 24 Mar 2021 12:16:29 +0900</lastBuildDate><atom:link href="https://kyun-j.github.io/tags/webview/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WebView &lt;-&gt; Native Interface 개선 라이브러리 소개</title>
+      <link>https://kyun-j.github.io/p/webview-native-interface-%EA%B0%9C%EC%84%A0-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EC%86%8C%EA%B0%9C/</link>
+      <pubDate>Wed, 24 Mar 2021 12:16:29 +0900</pubDate>
+      
+      <guid>https://kyun-j.github.io/p/webview-native-interface-%EA%B0%9C%EC%84%A0-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EC%86%8C%EA%B0%9C/</guid>
+      <description>WebView는 계륵이다 WebView를 사용하지 않을 수 없을까?  여러 프로젝트에서 WebView는 껄끄러운 존재입니다. Native의 아키텍쳐와는 별개로 구성하여야 하고, WebView만의 여러 설정법이 있기 때문입니다.. (수많은 버그는 덤이다)
+이런 WebView를 아예 사용하지 않으면 좋겠으나 기획, 마케팅에서 원하는 모든 정보 혹은 UI를 Native 영억에서 100% 컨트롤 할 수 없는 경우가 생기므로, 프로젝트 어딘가 한켠에 WebView를 사용해야 하는 경우가 생기기 마련이니다.
+ 진짜 귀찮은 것은 인터페이스 WebView가 정말로 귀찮은 이유는 바로 WebPage와의 Interface입니다.
+대표적인 사항으로 다음과 같은 것들이 있는데,</description>
+    </item>
+    
+  </channel>
+</rss>

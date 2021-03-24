@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ko-kr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='WebView는 계륵이다 WebView를 사용하지 않을 수 없을까?  여러 프로젝트에서 WebView는 껄끄러운 존재입니다. Native의 아키텍쳐와는 별개로 구성하여야 하고, WebView만의 여러 설정법이 있기 때문입니다.. (수많은 버그는 덤이다)
+이런 WebView를 아예 사용하지 않으면 좋겠으나 기획, 마케팅에서 원하는 모든 정보 혹은 UI를 Native 영억에서 100% 컨트롤 할 수 없는 경우가 생기므로, 프로젝트 어딘가 한켠에 WebView를 사용해야 하는 경우가 생기기 마련이니다.
+ 진짜 귀찮은 것은 인터페이스 WebView가 정말로 귀찮은 이유는 바로 WebPage와의 Interface입니다.
+대표적인 사항으로 다음과 같은 것들이 있는데,'><title>WebView &lt;-&gt; Native Interface 개선 라이브러리 소개</title>
+
+<link rel='canonical' href='https://kyun-j.github.io/p/webview-native-interface-%EA%B0%9C%EC%84%A0-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EC%86%8C%EA%B0%9C/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='WebView &lt;-&gt; Native Interface 개선 라이브러리 소개'>
+<meta property='og:description' content='WebView는 계륵이다 WebView를 사용하지 않을 수 없을까?  여러 프로젝트에서 WebView는 껄끄러운 존재입니다. Native의 아키텍쳐와는 별개로 구성하여야 하고, WebView만의 여러 설정법이 있기 때문입니다.. (수많은 버그는 덤이다)
+이런 WebView를 아예 사용하지 않으면 좋겠으나 기획, 마케팅에서 원하는 모든 정보 혹은 UI를 Native 영억에서 100% 컨트롤 할 수 없는 경우가 생기므로, 프로젝트 어딘가 한켠에 WebView를 사용해야 하는 경우가 생기기 마련이니다.
+ 진짜 귀찮은 것은 인터페이스 WebView가 정말로 귀찮은 이유는 바로 WebPage와의 Interface입니다.
+대표적인 사항으로 다음과 같은 것들이 있는데,'>
+<meta property='og:url' content='https://kyun-j.github.io/p/webview-native-interface-%EA%B0%9C%EC%84%A0-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EC%86%8C%EA%B0%9C/'>
+<meta property='og:site_name' content='dvkyun blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Adroid' /><meta property='article:tag' content='iOS' /><meta property='article:tag' content='Webview' /><meta property='article:tag' content='WKWebView' /><meta property='article:tag' content='JavaScriptBridge' /><meta property='article:tag' content='UserContentController' /><meta property='article:published_time' content='2021-03-24T12:16:29&#43;09:00'/><meta property='article:modified_time' content='2021-03-24T12:16:29&#43;09:00'/>
+<meta name="twitter:title" content="WebView &lt;-&gt; Native Interface 개선 라이브러리 소개">
+<meta name="twitter:description" content="WebView는 계륵이다 WebView를 사용하지 않을 수 없을까?  여러 프로젝트에서 WebView는 껄끄러운 존재입니다. Native의 아키텍쳐와는 별개로 구성하여야 하고, WebView만의 여러 설정법이 있기 때문입니다.. (수많은 버그는 덤이다)
+이런 WebView를 아예 사용하지 않으면 좋겠으나 기획, 마케팅에서 원하는 모든 정보 혹은 UI를 Native 영억에서 100% 컨트롤 할 수 없는 경우가 생기므로, 프로젝트 어딘가 한켠에 WebView를 사용해야 하는 경우가 생기기 마련이니다.
+ 진짜 귀찮은 것은 인터페이스 WebView가 정말로 귀찮은 이유는 바로 WebPage와의 Interface입니다.
+대표적인 사항으로 다음과 같은 것들이 있는데,">
+    </head>
+    <body class="">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.body.dataset.scheme = 'dark';
+        } else {
+            document.body.dataset.scheme = 'light';
+        }
+    })();
+</script><div class="container main-container flex on-phone--column extended article-page with-toolbar">
+            <aside class="sidebar left-sidebar sticky">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header class="site-info">
+        
+            <figure class="site-avatar">
+                
+                    
+                    
+                    
+                        
+                        <img src="/images/17011240_hu4f9ca08810d5fee49ae145d0e3ec7ed1_12190_300x0_resize_q75_box.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+
+                
+            </figure>
+        
+        <h1 class="site-name"><a href="https://kyun-j.github.io/">dvkyun blog</a></h1>
+        <h2 class="site-description">dvkyun blog</h2>
+    </header>
+
+    <ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/'>
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        
+            <li id="dark-mode-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <span>Dark Mode</span>
+            </li>
+        
+    </ol>
+</aside>
+
+            <main class="main full-width">
+    <div id="article-toolbar">
+        <a href="https://kyun-j.github.io/" class="back-home">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+            <span>Back</span>
+        </a>
+    </div>
+
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/adroid/" >
+                Adroid
+            </a>
+        
+            <a href="/categories/ios/" >
+                iOS
+            </a>
+        
+            <a href="/categories/webview/" >
+                Webview
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/webview-native-interface-%EA%B0%9C%EC%84%A0-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EC%86%8C%EA%B0%9C/">WebView &lt;-&gt; Native Interface 개선 라이브러리 소개</a>
+    </h2>
+
+    <footer class="article-time">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <time class="article-time--published">Mar 24, 2021</time>
+    </footer></div>
+</header>
+
+    <section class="article-content">
+    <h2 id="webview는-계륵이다">WebView는 계륵이다</h2>
+<h3 id="webview를-사용하지-않을-수-없을까">WebView를 사용하지 않을 수 없을까?</h3>
+<blockquote>
+<p>여러 프로젝트에서 WebView는 껄끄러운 존재입니다. Native의 아키텍쳐와는 별개로 구성하여야 하고, WebView만의 여러 설정법이 있기 때문입니다.. (수많은 버그는 덤이다)<br>
+이런 WebView를 아예 사용하지 않으면 좋겠으나 기획, 마케팅에서 원하는 모든 정보 혹은 UI를 Native 영억에서 100% 컨트롤 할 수 없는 경우가 생기므로,
+프로젝트 어딘가 한켠에 WebView를 사용해야 하는 경우가 생기기 마련이니다.</p>
+</blockquote>
+<h3 id="진짜-귀찮은-것은-인터페이스">진짜 귀찮은 것은 인터페이스</h3>
+<p>WebView가 정말로 귀찮은 이유는 바로 <strong>WebPage와의 Interface</strong>입니다.<br>
+대표적인 사항으로 다음과 같은 것들이 있는데,</p>
+<ol>
+<li>Android와 iOS 각각의 Interface구현 방법이 다르다</li>
+<li>WebPage상에서 Android, iOS의 Interface 구현체 구조가 서로 다르다.</li>
+<li>결과값(Return)을 전달하기가 애매하다.
+<ol>
+<li>Android의 JavaScriptBridge는 비동기로 결과값 전달이 불가능하며, Array 및 Map 형태의 데이터를 사용 할 수 없다.</li>
+<li>iOS의 UserContentController는 결과값을 전달하기 위한 장치를 별도로 구축해야 한다.</li>
+</ol>
+</li>
+</ol>
+<p><strong>이러한 문제점들을 해결 하고자 추가 자원(인적, 시간)이 필연적으로 발생</strong>하게 됩니다.<br>
+필자는 프로젝트들을 진행하면서, 이런 문제점들을 해결하고 공통화한 라이브러리를 제작하였습니다.</p>
+<h2 id="라이브러리-소개">라이브러리 소개</h2>
+<p>링크 - <a class="link" href="https://github.com/Kyun-J/FlexHybridApp-Android"  target="_blank" rel="noopener"
+    >Android용</a>, <a class="link" href="https://github.com/Kyun-J/FlexHybridApp-iOS"  target="_blank" rel="noopener"
+    >iOS용</a></p>
+<h3 id="주요-특징">주요 특징</h3>
+<blockquote>
+<ol>
+<li>구조가 유사한 kotlin의 lambda와 swift의 closure을 각각 사용하여, 인터페이스시 동작할 사항을 정의 할 수 있다.</li>
+<li>WebPage에서의 구현체는 동일하며, 별도의 js파일을 삽입할 필요가 없다. WebVeiw에서 필요한 스크립트를 제작하여 WebPage에 주입한다.</li>
+<li>결과값(Return)전달이 가능하고 비동기(WebPage의 Promise 패턴)방식을 통해 인터페이스 된다.</li>
+</ol>
+</blockquote>
+<h3 id="간단-사용법">간단 사용법</h3>
+<ol>
+<li>WebView에 인터페이스를 등록.</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kt" data-lang="kt"><span style="color:#75715e">/*
+</span><span style="color:#75715e"> * Android Kotlin
+</span><span style="color:#75715e"> */</span>
+
+<span style="color:#66d9ef">val</span> testLambda : FlexLambda.array = 
+{ arguments <span style="color:#f92672">-&gt;</span> <span style="color:#75715e">// arguments에는 WebPage에서 전달받을 값들이 담겨 있음
+</span><span style="color:#75715e"></span>    arrayOf(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>) <span style="color:#75715e">// [1,2,3] 배열을 리턴
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#75715e">// WebView에 testLambda가 동작하는 testInterface 등록
+</span><span style="color:#75715e">// 첫번째 인자는 WebPage에서 사용할 인터페이스 함수명,
+</span><span style="color:#75715e">// 두번재 인자는 인터페이스 시 동작할 lambda
+</span><span style="color:#75715e"></span>mWebView.arrayInterface(<span style="color:#e6db74">&#34;testInterface&#34;</span>, testLambda)
+</code></pre></div><ol start="2">
+<li>WebPage에서 함수 사용</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kt" data-lang="kt"><span style="color:#75715e">/*
+</span><span style="color:#75715e"> * Android Kotlin
+</span><span style="color:#75715e"> */</span>
+
+<span style="color:#75715e">// WebView에 웹페이지를 로드하는 시점에 WebPage에 인터페이스가 자동으로 등록.
+</span><span style="color:#75715e"></span>mWebView.loadUrl(someUrl)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#75715e">/*
+</span><span style="color:#75715e"> * WebPage
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test</span>() {
+    <span style="color:#75715e">// $flex 객체가 WebPage에 자동으로 생성
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// WebView에서 등록한 testInterface가 자동으로 $flex의 하위 객체로 생성
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// $flex의 인터페이스는 Promise를 리턴
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// Android, iOS 모두 동일하여 코드 이원화 할 필요 X
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">$flex</span>.<span style="color:#a6e22e">testInterface</span>(); <span style="color:#75715e">// [1,2,3]
+</span><span style="color:#75715e"></span>}
+</code></pre></div><h3 id="마무리">마무리</h3>
+<p>해당 라이브러리는 더 많은 추가 기능과 사용법이 있으므로, 관심이 있다면
+Repository(<a class="link" href="https://github.com/Kyun-J/FlexHybridApp-Android"  target="_blank" rel="noopener"
+    >Android용</a>, <a class="link" href="https://github.com/Kyun-J/FlexHybridApp-iOS"  target="_blank" rel="noopener"
+    >iOS용</a>)에 방문하여 확인 해 주시면 감사드립니다!</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/adroid/">Adroid</a>
+        
+            <a href="/tags/ios/">iOS</a>
+        
+            <a href="/tags/webview/">Webview</a>
+        
+            <a href="/tags/wkwebview/">WKWebView</a>
+        
+            <a href="/tags/javascriptbridge/">JavaScriptBridge</a>
+        
+            <a href="/tags/usercontentcontroller/">UserContentController</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "dvkyun" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2021 dvkyun blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="2.2.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
