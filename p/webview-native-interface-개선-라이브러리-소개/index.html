@@ -329,7 +329,7 @@ mWebView.load(someUrl)
 </span><span style="color:#75715e"></span>    <span style="color:#75715e">// WebView에서 등록한 testInterface가 자동으로 $flex의 하위 객체로 생성
 </span><span style="color:#75715e"></span>    <span style="color:#75715e">// $flex의 인터페이스는 Promise를 리턴
 </span><span style="color:#75715e"></span>    <span style="color:#75715e">// Android, iOS 모두 동일하여 코드 이원화 할 필요 X
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">$flex</span>.<span style="color:#a6e22e">testInterface</span>(); <span style="color:#75715e">// [1,2,3]
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">testArray</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">$flex</span>.<span style="color:#a6e22e">testInterface</span>(); <span style="color:#75715e">// [1,2,3]
 </span><span style="color:#75715e"></span>}
 </code></pre></div><h3 id="마무리">마무리</h3>
 <p>해당 라이브러리는 더 많은 추가 기능과 사용법이 있으므로, 관심이 있다면
