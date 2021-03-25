@@ -309,8 +309,9 @@ Dart의 아래 특징을 사용하면 충분히 가능할거란 판단이 들어
 <p>상태 변경에따라 Widget을 빌드하는 클래스인 _MyHomePageState 클래스에 <code>with UserApi</code>를 추가하여, UserApi mixin에 선언한 함수를 바로 사용 할 수 있게 되었다.<br>
 이제 _addUser()를 호출할 때마다 리스트에 새로운 <code>User Model</code>이 <em><strong>서버와의 통신을 통해</strong></em> 추가되고, 이를 활용해 여러 작업(리스트를 추가한다던지&hellip;)이 가능할 것이다!</p>
 <h2 id="마무리">마무리&hellip;</h2>
-<p>Retrofit과 유사하게 http 통신을 하도록 구성해 보았습니다.<br>
-이 포스트에는 응답 부분만 다루었지만, 조금만 수정하면 <strong>Request도 충분히 Model을 통해</strong> 사용할 수 있을 것입니다.</p>
+<p>Flutter는 리플렉션을 지원하지 않기에, GSON이나 Jackson와 유사한 라이브러리가 존재하지 않습니다.<br>
+그러나 단순 직렬화를 통한 방법은 나름 쉽게 구현할 수 있기에, 위와 같은 방법을 사용하였습니다.<br>
+기회가 된다면 <strong>json_serializable</strong> 을 활용하여 Request에도 Model을 사용하는 방법을 포스팅 해 보도록 하겠습니다.</p>
 
 </section>
 
